@@ -13,7 +13,7 @@ after cloning the repository all you have to do is :
 - run "poetry install" command
 - create a .env file and add your <b>SECRET_KEY<b> to it
 
-# More :
+## More :
 
 this project is still in the development phase , all it can do now is :
 
