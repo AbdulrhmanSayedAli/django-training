@@ -1,3 +1,4 @@
+from cgitb import reset
 from django.db import models
 
 # Create your models here.
@@ -9,6 +10,14 @@ class Artist (models.Model):
 
     def __str__(self):
         return self.stage_name
+
+    @property
+    def approved_albums(self):
+        result = 0
+        for album in self.albums.all():
+            if album.is_approved:
+                result+=1
+        return result
 
     class Meta :
         db_table = "artists"
