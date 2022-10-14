@@ -14,3 +14,9 @@ class Album (models.Model):
     creation_datetime = models.DateTimeField(auto_now_add = True)
     release_datetime  = models.DateTimeField()
     cost = models.DecimalField(validators=[costValidator],decimal_places=5,max_digits=10)
+
+    def __str__(self):
+        return self.name
+
+    class Meta :
+        db_table = "albums"
