@@ -5,5 +5,5 @@ from .models import Album
 
 @admin.register(Album)
 class AlbumAdmin(admin.ModelAdmin):
-    readonly_fields = ('creation_datetime',)
+    readonly_fields = ('created','modified')
     list_display = ("name", "is_approved")
