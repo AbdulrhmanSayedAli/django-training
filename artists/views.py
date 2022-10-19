@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serilaizer import ArtistSerializer
 from rest_framework import status
+from .models import Artist
 
 class ArtistsView(APIView):
     def post(self, request):
@@ -12,3 +13,7 @@ class ArtistsView(APIView):
             return Response ({"msg":"end point created"},status=status.HTTP_201_CREATED)
             
         return Response(serilaizer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+    def get (self,request):
+        serializer = ArtistSerializer(Artist.objects.all(),many=True)
+        return Response(serializer.data)
