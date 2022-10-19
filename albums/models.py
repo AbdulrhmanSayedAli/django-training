@@ -3,7 +3,7 @@ from django.db import models
 from artists.models import Artist
 from django.core.exceptions import ValidationError
 from model_utils.models import TimeStampedModel
-# Create your models here.
+
 
 def costValidator(cost):
     if cost<0:
