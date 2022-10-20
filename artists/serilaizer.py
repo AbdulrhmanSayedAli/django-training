@@ -3,12 +3,21 @@ from .models import Artist
 from albums.models import Album
 
 
+class ArtistSerializer(serializers.ModelSerializer):
+    stage_name = serializers.CharField()
+    social_link = serializers.URLField(required=False)
+
+    class Meta:
+        model = Artist
+        fields = "__all__"
+
+
 class InnerAlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
         fields = ["id","name","created","release_datetime","cost"]
 
-class ArtistSerializer(serializers.ModelSerializer):
+class ALLArtistsSerializer(serializers.ModelSerializer):
     stage_name = serializers.CharField()
     social_link = serializers.URLField(required=False)
     albums = InnerAlbumSerializer(many=True)
