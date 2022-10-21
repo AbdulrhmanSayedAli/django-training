@@ -20,3 +20,4 @@ this project is still in the development phase , all it can do now is :
 - create an artist [fields:stage_name,social_link]
 - create an album [fields:name,creation_datetime,release_datetime,artist,cost]
 - create , delete and update those models in the django admin
+
