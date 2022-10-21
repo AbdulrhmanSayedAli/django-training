@@ -4,8 +4,10 @@ from rest_framework.response import Response
 from .serilaizer import ArtistSerializer
 from rest_framework import status
 from .models import Artist
+from musicplatform.decorators import auth_decorator
 
 class ArtistsView(APIView):
+    @auth_decorator
     def post(self, request):
         serilaizer = ArtistSerializer(data=request.data)
         if serilaizer.is_valid():
@@ -18,4 +20,5 @@ class ArtistsView(APIView):
         queryset = Artist.objects.all()
         queryset = queryset.prefetch_related('albums')
         serializer = ArtistSerializer(queryset.all(),many=True)
+        print(request.user.is_authenticated)
         return Response(serializer.data)
