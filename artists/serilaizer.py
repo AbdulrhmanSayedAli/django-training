@@ -12,6 +12,13 @@ class ArtistSerializer(serializers.ModelSerializer):
     stage_name = serializers.CharField()
     social_link = serializers.URLField(required=False)
     albums = InnerAlbumSerializer(many=True,required=False)
+    
+
+    def validate_stage_name(self, value):
+        if Artist.objects.filter(stage_name=value).exists():
+            raise serializers.ValidationError("stage name is not unique")
+        return value
+
 
     class Meta:
         model = Artist
