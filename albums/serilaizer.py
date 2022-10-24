@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Album
-from django.core.exceptions import ValidationError
 from .models_validators import costValidator
 class AlbumSerializer(serializers.ModelSerializer):
     name = serializers.CharField(default="New Album")
