@@ -16,6 +16,7 @@ after cloning the repository all you have to do is :
 
 - run "poetry install" command
 - create a .env file and add your <b>SECRET_KEY<b> to it
+- run the django app using the command "poetry run manage.py runserver"
 
 ## More :
 
