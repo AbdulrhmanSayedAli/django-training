@@ -1,4 +1,3 @@
-from msilib.schema import SelfReg
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serilaizer import ArtistSerializer
