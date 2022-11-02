@@ -34,7 +34,8 @@ INSTALLED_APPS = [
     'albums',
     'users',
     'authentication',
-    'rest_framework'
+    'rest_framework',
+    'knox',
 ]
 
 MIDDLEWARE = [
