@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'artists',
     'albums',
     'users',
+    'authentication',
     'rest_framework'
 ]
 
