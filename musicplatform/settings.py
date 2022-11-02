@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'artists',
     'albums',
-    'my_auth',
     'rest_framework'
 ]
 

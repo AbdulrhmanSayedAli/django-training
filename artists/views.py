@@ -4,10 +4,8 @@ from rest_framework.response import Response
 from .serilaizer import ArtistSerializer
 from rest_framework import status
 from .models import Artist
-from musicplatform.decorators import auth_decorator
 
 class ArtistsView(APIView):
-    @auth_decorator
     def post(self, request):
         serilaizer = ArtistSerializer(data=request.data)
         if serilaizer.is_valid():
