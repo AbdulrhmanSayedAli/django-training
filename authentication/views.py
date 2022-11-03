@@ -19,7 +19,7 @@ class Register (APIView):
         User.objects.create_user(username=serializer.data["username"],
                                  email=serializer.data["email"],
                                  password=serializer.data["password1"])
-        return Response("user created successfully")
+        return Response({"result":"user created successfully"})
 
 
 class Login (KnoxLoginView):
@@ -35,7 +35,7 @@ class Login (KnoxLoginView):
             instance, token = AuthToken.objects.create(user, token_ttl)
             return Response({"token":token,"user":serializer.data})
         
-        return Response("invalid login")
+        return Response({"result":"invalid login"})
 
 
 class LogOut (KnoxLogOutView):
@@ -43,4 +43,5 @@ class LogOut (KnoxLogOutView):
     permission_classes=[IsAuthenticated]
     def post (self,request):
         logout(request)
-        return super(LogOut, self).post(request, format=None)
+        super(LogOut, self).post(request, format=None)
+        return Response({"result":"successfully logged out"})
