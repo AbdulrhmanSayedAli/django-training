@@ -9,11 +9,11 @@ class RegisterUserSerializer(serializers.Serializer):
     password1 = serializers.CharField()
     password2 = serializers.CharField()
 
-    def validate_email(self, email):
-        existing = User.objects.filter(email=email).first()
+    def validate_username(self, username):
+        existing = User.objects.filter(username=username).first()
         if existing:
-            raise serializers.ValidationError("Your email is already in use")
-        return email
+            raise serializers.ValidationError("Your username is already in use")
+        return username
 
     def validate(self, data):
         if data.get('password1') != data.get('password2'):
@@ -27,9 +27,3 @@ class RegisterUserSerializer(serializers.Serializer):
         validate_password(password=password, user=user)
 
         return data
-
-
-class GetUserSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields=("id","username","email","bio")

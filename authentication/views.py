@@ -1,7 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .permissions import IsAuthenticated,IsSuperUser
-from .serializers import RegisterUserSerializer ,GetUserSerializer
+from musicplatform.permissions import IsAuthenticated,IsSuperUser
+from .serializers import RegisterUserSerializer
+from users.serializers import UserSerializer
 from users.models import User
 from django.contrib.auth import authenticate, login ,logout
 from knox.views import LoginView as KnoxLoginView
@@ -30,7 +31,7 @@ class Login (KnoxLoginView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            serializer = GetUserSerializer(user)
+            serializer = UserSerializer(user)
             token_ttl = self.get_token_ttl()
             instance, token = AuthToken.objects.create(user, token_ttl)
             return Response({"token":token,"user":serializer.data})
