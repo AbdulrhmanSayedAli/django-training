@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from musicplatform.permissions import IsAuthenticated,IsSuperUser
+from musicplatform.permissions import IsAuthenticatedorReadOnly,IsSuperUser
 from .serializers import RegisterUserSerializer
 from users.serializers import UserSerializer
 from users.models import User
@@ -11,7 +11,7 @@ from knox.models import AuthToken
 from knox.auth import TokenAuthentication
 
 class Register (APIView):
-    permission_classes=[~IsAuthenticated|IsSuperUser]
+    permission_classes=[~IsAuthenticatedorReadOnly|IsSuperUser]
     def post (self,request):
         serializer = RegisterUserSerializer(data=request.data)
         if not serializer.is_valid():
@@ -24,7 +24,7 @@ class Register (APIView):
 
 
 class Login (KnoxLoginView):
-    permission_classes=[~IsAuthenticated]
+    permission_classes=[~IsAuthenticatedorReadOnly]
     def post (self,request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -41,7 +41,7 @@ class Login (KnoxLoginView):
 
 class LogOut (KnoxLogOutView):
     authentication_classes = [TokenAuthentication]
-    permission_classes=[IsAuthenticated]
+    permission_classes=[IsAuthenticatedorReadOnly]
     def post (self,request):
         logout(request)
         super(LogOut, self).post(request, format=None)

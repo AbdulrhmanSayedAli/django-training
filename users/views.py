@@ -5,10 +5,11 @@ from rest_framework import status
 from .serializers import UserSerializer
 from musicplatform.permissions import IsSameUserOrReadOnly
 from knox.auth import TokenAuthentication
+from musicplatform.permissions import IsAuthenticatedorReadOnly
 
 class UserView (APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes=[IsSameUserOrReadOnly]
+    permission_classes=[IsAuthenticatedorReadOnly&IsSameUserOrReadOnly]
     
     def get (self,request,pk):
         user = User.objects.filter(pk=pk)
