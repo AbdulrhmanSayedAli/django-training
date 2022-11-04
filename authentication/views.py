@@ -9,13 +9,14 @@ from knox.views import LoginView as KnoxLoginView
 from knox.views import LogoutView as KnoxLogOutView
 from knox.models import AuthToken
 from knox.auth import TokenAuthentication
+from rest_framework import status
 
 class Register (APIView):
     permission_classes=[~IsAuthenticatedorReadOnly|IsSuperUser]
     def post (self,request):
         serializer = RegisterUserSerializer(data=request.data)
         if not serializer.is_valid():
-            return Response(serializer.errors)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
         User.objects.create_user(username=serializer.data["username"],
                                  email=serializer.data["email"],
@@ -36,7 +37,7 @@ class Login (KnoxLoginView):
             instance, token = AuthToken.objects.create(user, token_ttl)
             return Response({"token":token,"user":serializer.data})
         
-        return Response({"result":"invalid login"})
+        return Response({"result":"invalid login"},status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogOut (KnoxLogOutView):

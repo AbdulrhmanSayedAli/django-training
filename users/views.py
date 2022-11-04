@@ -27,7 +27,7 @@ class UserView (APIView):
         user = user[0]
         serializer = UserSerializer(user,data=request.data,partial=partial)
         if not serializer.is_valid():
-             return Response(serializer.errors,status=status.HTTP_205_RESET_CONTENT)
+             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
         self.check_object_permissions(self.request, user)
         serializer.update(user,serializer.validated_data)
