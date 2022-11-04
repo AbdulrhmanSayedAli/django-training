@@ -8,8 +8,12 @@ def api_client():
     def result_func(user=None):
         client = APIClient()
         if  user :
+            instance = User.objects.filter(username=user["username"]).first()
+            if not instance:
+                instance = User.objects.create_user(**user)
+            
             client.post('/authentication/login', {"username":user["username"],"password":user["password"]}, format='json')
             token = AuthToken.objects.get(user__username=user["username"])
-            client.force_authenticate(user=User.objects.get(username=user["username"]),token=token)
+            client.force_authenticate(user=instance,token=token)
         return client
     return result_func

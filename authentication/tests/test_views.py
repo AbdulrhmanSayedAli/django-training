@@ -52,7 +52,6 @@ def test_logout (api_client):
     response = client.post('/authentication/logout', {}, format='json')
     assert response.status_code == 401
 
-    User.objects.create_user(**user_Data)
     client = api_client(user_Data)
 
     response = client.post('/authentication/logout',json={})
