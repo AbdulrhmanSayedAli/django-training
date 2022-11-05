@@ -1,5 +1,4 @@
 from users.models import User
-from knox.models import AuthToken
 import pytest
 import json
 
