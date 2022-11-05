@@ -17,5 +17,4 @@ class ArtistsView(APIView):
         queryset = Artist.objects.all()
         queryset = queryset.prefetch_related('albums')
         serializer = ArtistSerializer(queryset.all(),many=True)
-        print(request.user.is_authenticated)
         return Response(serializer.data)

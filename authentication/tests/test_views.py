@@ -69,7 +69,7 @@ def test_register_already_logged_in(api_client):
 def test_register(api_client):
     client = api_client()
     response = client.post('/authentication/register', {"username":"dd2","password1":"aaa12345","password2":"aaa12345","email":"dd@gmail.com"}, format='json')
-    assert response.status_code == 200
+    assert response.status_code == 201
     expected_response_content = {"result":"user created successfully"}
     response_content = json.loads(response.content.decode("unicode_escape"))
     assert response_content == expected_response_content 

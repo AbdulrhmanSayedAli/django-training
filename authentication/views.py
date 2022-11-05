@@ -21,7 +21,7 @@ class Register (APIView):
         User.objects.create_user(username=serializer.data["username"],
                                  email=serializer.data["email"],
                                  password=serializer.data["password1"])
-        return Response({"result":"user created successfully"})
+        return Response({"result":"user created successfully"},status=status.HTTP_201_CREATED)
 
 
 class Login (KnoxLoginView):
