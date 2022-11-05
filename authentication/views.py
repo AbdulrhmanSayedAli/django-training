@@ -33,8 +33,7 @@ class Login (KnoxLoginView):
         if user is not None:
             login(request, user)
             serializer = UserSerializer(user)
-            token_ttl = self.get_token_ttl()
-            instance, token = AuthToken.objects.create(user, token_ttl)
+            instance, token = AuthToken.objects.create(user)
             return Response({"token":token,"user":serializer.data})
         
         return Response({"result":"invalid login"},status=status.HTTP_400_BAD_REQUEST)
@@ -43,7 +42,7 @@ class Login (KnoxLoginView):
 class LogOut (KnoxLogOutView):
     authentication_classes = [TokenAuthentication]
     permission_classes=[IsAuthenticatedorReadOnly]
-    def post (self,request):
+    def post (self,request,*args,**kwargs):
         logout(request)
-        super(LogOut, self).post(request, format=None)
+        super().post(request,*args,**kwargs)
         return Response({"result":"successfully logged out"})
