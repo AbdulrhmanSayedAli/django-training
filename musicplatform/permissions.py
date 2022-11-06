@@ -1,5 +1,7 @@
 from rest_framework.permissions import BasePermission , SAFE_METHODS
-
+from artists.models import Artist
+from rest_framework.exceptions import APIException
+from rest_framework import status
 class IsAuthenticatedorReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
@@ -15,3 +17,25 @@ class IsSameUserOrReadOnly (BasePermission):
         if request.method in SAFE_METHODS:
             return True
         return obj == request.user
+
+
+
+class NotSameUser(APIException):
+    status_code = status.HTTP_403_FORBIDDEN
+    default_detail = "you must be an artist to do this request"
+
+
+class IsTheUserArtistOrReadOnly (BasePermission):
+    @property
+    def message(self):
+        return "This IP is not whi"
+
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        try:
+            artist = request.user.artist
+        except  Artist.DoesNotExist:
+             raise NotSameUser()
+        return True
+
