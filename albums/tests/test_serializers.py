@@ -31,7 +31,7 @@ def Album_To_Json(album):
 
 @pytest.mark.django_db
 def test_serialize():
-    user = User.objects.create(username="dd",password="12345aa")
+    user = User.objects.create_user(username="dd",password="12345aa")
     artist = Artist.objects.create(stage_name="roctes",user=user)
     album = Album.objects.create(name="koko",artist=artist,release_datetime="2022-11-11 12:12",cost=22)
     serializer = AlbumSerializer(album)

@@ -26,10 +26,6 @@ class NotSameUser(APIException):
 
 
 class IsTheUserArtistOrReadOnly (BasePermission):
-    @property
-    def message(self):
-        return "This IP is not whi"
-
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
