@@ -1,5 +1,6 @@
 
 from pathlib import Path
+from datetime import timedelta
 import environ
 import os
 
@@ -136,3 +137,37 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "musicplatform"
+    }
+}
+
+
+CELERY_CONF_BROKER_URL = "redis://localhost:6379/0"
+CELERY_CONF_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_CONF_CACHE_BACKEND = 'default'
+CELERY_CONF_TASK_TRACK_STARTED = True
+CELERY_CONF_TASK_TIME_LIMIT = 30 * 60
+
+
+CELERY_CONF_BEAT_SCHEDULE={ 
+    'check-every-24-hours': { 'task': 'albums.tasks.check_last_album_30_days',
+    'schedule': timedelta(hours=24),
+    },
+}
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') 

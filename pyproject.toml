@@ -17,6 +17,8 @@ django-imagekit = "^4.1.0"
 django-rest-knox = "^4.2.0"
 pytest-django = "^4.5.2"
 django-filter = "^22.1"
+celery = {extras = ["redis"], version = "^5.2.7"}
+django-redis = "^5.2.0"
 
 
 [build-system]

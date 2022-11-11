@@ -5,7 +5,7 @@ from imagekit.models import ImageSpecField
 from django.core.exceptions import ValidationError
 from imagekit.processors import ResizeToFill
 from .models_validators import costValidator,audio_file_validator
-
+from .tasks import send_congratulation_email
 
 
 class Album (TimeStampedModel):
@@ -14,6 +14,12 @@ class Album (TimeStampedModel):
     release_datetime  = models.DateTimeField()
     cost = models.DecimalField(validators=[costValidator],decimal_places=5,max_digits=10)
     is_approved = models.BooleanField(default=False,help_text="Approve the album if its name is not explicit")
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            send_congratulation_email.delay(self.artist.user.email, self.name)
+        super(Album, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return self.name
